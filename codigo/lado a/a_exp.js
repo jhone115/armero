@@ -49,6 +49,7 @@
             document.getElementById('main-body').classList.add('page-turn-reverse');
 
             setTimeout(() => {
-                window.history.back();
+                const basePath = window.location.pathname.includes('/lado%20a/') ? '' : '../lado a/';
+                window.location.href = `${basePath}a.html`;
             }, 1200);
         });

@@ -46,14 +46,17 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     ];
 
+    // Verificar si ya se ha visto la sexta polaroid
     const vistoPolaroid6 = localStorage.getItem('vistoPolaroid6');
 
+    // Crear las polaroids
     polaroids.forEach(polaroid => {
         const polaroidElement = document.createElement('div');
         polaroidElement.className = 'polaroid';
         polaroidElement.style.setProperty('--rotation', polaroid.rotation);
         polaroidElement.setAttribute('data-id', polaroid.id);
-
+        
+        // Contenido especial para la sexta polaroid si ya fue vista
         if (polaroid.id === 6 && vistoPolaroid6 === 'true') {
             polaroidElement.innerHTML = `
                 <div class="polaroid-image" style="background-image: url('${polaroid.image}')"></div>
@@ -79,7 +82,6 @@ document.addEventListener('DOMContentLoaded', function() {
             if (id === '6') {
                 localStorage.setItem('vistoPolaroid6', 'true');
             }
-
             document.querySelector('.pantalla-a').classList.add('page-turn');
 
             setTimeout(() => {
@@ -92,11 +94,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.addEventListener('click', function(e) {
         if (e.target && e.target.id === 'btn-lado-b') {
-
             document.querySelector('.pantalla-a').classList.add('page-turn');
 
             setTimeout(() => {
-                window.location.href = "../lado b/b.html";
+                const basePath = window.location.pathname.includes('/lado%20a/') ? '../' : '';
+                window.location.href = `${basePath}lado b/principal.html`;
             }, 1000);
         }
     });
