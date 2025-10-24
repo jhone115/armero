@@ -78,7 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
   btnAdelante.addEventListener("click", () => {
     // Redirigir a otro HTML
-    window.location.href = "lado a/a.html";
+    window.location.href = "codigo/lado a/a.html";
   });
   
   // Función para pantalla completa
