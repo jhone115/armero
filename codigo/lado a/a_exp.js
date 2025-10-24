@@ -1,7 +1,6 @@
-
         const urlParams = new URLSearchParams(window.location.search);
-        const imageId = urlParams.get('id'); 
-
+        const imageId = urlParams.get('id');
+        
         const imageData = {
             1: {
                 image: "../../recursos/imagenes/IMG-20251005-WA0010.jpg",
@@ -28,28 +27,44 @@
                 description: "“Hoy en día hay unos muros, pero estos muros están en un grave riesgo porque la misma naturaleza va retomando. Así que hay árboles que han crecido y como no los hemos sabido controlar a tiempo, ya son árboles inmensos que han crecido dentro de las habitaciones y los espacios de las casas y pues estas empiezan a caerse. A veces incluso se caen los mismos árboles, que no pueden arraigarse porque encuentran los pisos y se expanden pero no se arraigan en profundidad y cualquier viento viene, los tumba y tumba los muros”, advierte."
         }};
 
+        
+        // Cargar los datos correspondientes al ID
         document.addEventListener('DOMContentLoaded', function() {
-            const data = imageData[imageId] || imageData[1]; 
-
+            const data = imageData[imageId] || imageData[1]; // Usar la primera si no hay ID válido
+            
+            // Establecer la imagen de fondo para cubrir toda la pantalla
             const body = document.getElementById('main-body');
             body.style.backgroundImage = `url('${data.image}')`;
             body.style.backgroundSize = "cover";
             body.style.backgroundPosition = "center";
             body.style.backgroundRepeat = "no-repeat";
             body.style.backgroundAttachment = "fixed";
-
+            
+            // Establecer la descripción
             document.getElementById('detail-description').textContent = data.description;
-
+            
+            // Si es la polaroid 6, marcarla como vista
             if (imageId === '6') {
                 localStorage.setItem('vistoPolaroid6', 'true');
             }
         });
 
+        // Botón de atrás con animación reversa - SOLUCIÓN DEFINITIVA
         document.getElementById('btn-atras').addEventListener('click', function() {
+            // Aplicar animación reversa
             document.getElementById('main-body').classList.add('page-turn-reverse');
-
+            
+            // Redirigir después de la animación - SOLUCIÓN PARA GITHUB PAGES
             setTimeout(() => {
-                const basePath = window.location.pathname.includes('/lado%20a/') ? '' : '../lado a/';
-                window.location.href = `${basePath}a.html`;
+                // Detectar si estamos en GitHub Pages o local
+                const isGitHubPages = window.location.hostname.includes('github.io');
+                
+                if (isGitHubPages) {
+                    // Para GitHub Pages: ir a la raíz del sitio
+                    window.location.href = '../a.html';
+                } else {
+                    // Para desarrollo local
+                    window.location.href = 'a.html';
+                }
             }, 1200);
         });

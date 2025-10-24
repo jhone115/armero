@@ -1,6 +1,7 @@
+
 document.addEventListener('DOMContentLoaded', function() {
     const polaroidGrid = document.querySelector('.polaroid-grid');
-
+    
     const polaroids = [
         { 
             id: 1, 
@@ -71,19 +72,25 @@ document.addEventListener('DOMContentLoaded', function() {
                 <div class="polaroid-caption">${polaroid.title}</div>
             `;
         }
-
+        
+        // Añadir evento de clic para la animación y redirección
         polaroidElement.addEventListener('click', function(e) {
+            // Evitar que se active al hacer clic en el botón lado B
             if (e.target.closest('.lado-b-button')) {
                 return;
             }
             
             const id = this.getAttribute('data-id');
-
+            
+            // Si es la polaroid 6, marcar como vista
             if (id === '6') {
                 localStorage.setItem('vistoPolaroid6', 'true');
             }
+            
+            // Aplicar animación de paso de hoja de libro a toda la pantalla
             document.querySelector('.pantalla-a').classList.add('page-turn');
-
+            
+            // Redirigir después de la animación
             setTimeout(() => {
                 window.location.href = `a_exp.html?id=${id}`;
             }, 1000);
@@ -92,13 +99,24 @@ document.addEventListener('DOMContentLoaded', function() {
         polaroidGrid.appendChild(polaroidElement);
     });
 
+    // Añadir evento para el botón Lado B (si existe)
     document.addEventListener('click', function(e) {
         if (e.target && e.target.id === 'btn-lado-b') {
+            // Aplicar animación de paso de hoja de libro a toda la pantalla
             document.querySelector('.pantalla-a').classList.add('page-turn');
-
+            
+            // Redirigir al lado B después de la animación
             setTimeout(() => {
-                const basePath = window.location.pathname.includes('/lado%20a/') ? '../' : '';
-                window.location.href = `${basePath}lado b/principal.html`;
+                // Detectar si estamos en GitHub Pages o local
+                const isGitHubPages = window.location.hostname.includes('github.io');
+                
+                if (isGitHubPages) {
+                    // Para GitHub Pages
+                    window.location.href = '../lado%20b/principal.html';
+                } else {
+                    // Para desarrollo local
+                    window.location.href = '../lado b/principal.html';
+                }
             }, 1000);
         }
     });
