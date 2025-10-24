@@ -29,7 +29,7 @@
         }};
 
         document.addEventListener('DOMContentLoaded', function() {
-            const data = imageData[imageId] || imageData[1];
+            const data = imageData[imageId] || imageData[1]; 
 
             const body = document.getElementById('main-body');
             body.style.backgroundImage = `url('${data.image}')`;
@@ -39,10 +39,13 @@
             body.style.backgroundAttachment = "fixed";
 
             document.getElementById('detail-description').textContent = data.description;
+
+            if (imageId === '6') {
+                localStorage.setItem('vistoPolaroid6', 'true');
+            }
         });
 
         document.getElementById('btn-atras').addEventListener('click', function() {
-
             document.getElementById('main-body').classList.add('page-turn-reverse');
 
             setTimeout(() => {

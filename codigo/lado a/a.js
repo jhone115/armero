@@ -46,20 +46,39 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     ];
 
+    const vistoPolaroid6 = localStorage.getItem('vistoPolaroid6');
 
     polaroids.forEach(polaroid => {
         const polaroidElement = document.createElement('div');
         polaroidElement.className = 'polaroid';
         polaroidElement.style.setProperty('--rotation', polaroid.rotation);
         polaroidElement.setAttribute('data-id', polaroid.id);
-        
-        polaroidElement.innerHTML = `
-            <div class="polaroid-image" style="background-image: url('${polaroid.image}')"></div>
-            <div class="polaroid-caption">${polaroid.title}</div>
-        `;
 
-        polaroidElement.addEventListener('click', function() {
+        if (polaroid.id === 6 && vistoPolaroid6 === 'true') {
+            polaroidElement.innerHTML = `
+                <div class="polaroid-image" style="background-image: url('${polaroid.image}')"></div>
+                <div class="polaroid-caption">${polaroid.title}</div>
+                <div class="lado-b-button-container">
+                    <button class="lado-b-button" id="btn-lado-b">Ir al Lado B</button>
+                </div>
+            `;
+        } else {
+            polaroidElement.innerHTML = `
+                <div class="polaroid-image" style="background-image: url('${polaroid.image}')"></div>
+                <div class="polaroid-caption">${polaroid.title}</div>
+            `;
+        }
+
+        polaroidElement.addEventListener('click', function(e) {
+            if (e.target.closest('.lado-b-button')) {
+                return;
+            }
+            
             const id = this.getAttribute('data-id');
+
+            if (id === '6') {
+                localStorage.setItem('vistoPolaroid6', 'true');
+            }
 
             document.querySelector('.pantalla-a').classList.add('page-turn');
 
@@ -69,5 +88,16 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         polaroidGrid.appendChild(polaroidElement);
+    });
+
+    document.addEventListener('click', function(e) {
+        if (e.target && e.target.id === 'btn-lado-b') {
+
+            document.querySelector('.pantalla-a').classList.add('page-turn');
+
+            setTimeout(() => {
+                window.location.href = "../lado b/b.html";
+            }, 1000);
+        }
     });
 });
